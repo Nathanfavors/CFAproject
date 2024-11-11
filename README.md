@@ -4,6 +4,7 @@ Java project for Chick-Fil-A
 import java.util.*;
 
 // MenuItem class to represent each item in the menu
+
 class MenuItem {
     private final String name;
     private final double price;
@@ -28,6 +29,7 @@ class MenuItem {
 }
 
 // Menu class to hold the menu items
+
 class Menu {
     private final HashMap<Integer, MenuItem> items;
 
@@ -52,6 +54,7 @@ class Menu {
 }
 
 // Base Order class
+
 class Order {
     private final ArrayList<MenuItem> items;
     private double totalPrice;
@@ -83,6 +86,7 @@ class Order {
 }
 
 // DineInOrder subclass with a table number
+
 class DineInOrder extends Order {
     private final int tableNumber;
 
@@ -103,6 +107,7 @@ class DineInOrder extends Order {
 }
 
 // DriveThruOrder subclass with a processing fee
+
 class DriveThruOrder extends Order {
     private static final double PROCESSING_FEE = 1.00;
 
@@ -125,6 +130,7 @@ class DriveThruOrder extends Order {
 }
 
 // Receipt class for printing the receipt
+
 class Receipt {
     public void printReceipt(Order order) {
         System.out.println("\n---- Receipt ----");
@@ -134,6 +140,7 @@ class Receipt {
 }
 
 // OrderProcessor class to handle different types of orders
+
 class OrderProcessor {
     public void processOrder(Order order, Menu menu, Scanner scanner) {
         System.out.println("Please choose items for your order.");
@@ -160,6 +167,7 @@ class OrderProcessor {
 }
 
 // Main class to demonstrate scenarios
+
 public class ChickFilAOrderSimulation {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
