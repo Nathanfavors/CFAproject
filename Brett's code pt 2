@@ -1,0 +1,284 @@
+import java.util.*;
+
+public class ChickFilAOrderSimulation {
+
+public static void main(String[] args) {
+    Scanner input = new Scanner(System.in);
+    Menu menu = new Menu();
+    OrderProcessor orderProcessor = new OrderProcessor();
+
+    System.out.println("Welcome to Chick-Fil-A! Enter (1) for Dine in or (2) for drive thru."); 
+    
+int option = input.nextInt(); 
+
+    switch (option) {
+    case 1: System.out.println("--- Dine-In Order ---");
+    System.out.print("Enter table number for dine-in: ");
+    int tableNumber = input.nextInt();
+    Order dineInOrder = new DineInOrder(tableNumber);
+    
+    orderProcessor.processOrder(dineInOrder, menu, input);
+ break; 
+    case 2:
+    System.out.println("--- Drive-Thru Order ---");
+    Order driveThruOrder = new DriveThruOrder();
+    orderProcessor.processOrder(driveThruOrder, menu, input);
+break;
+    }
+}
+}
+--------------------
+class DineInOrder extends Order {
+
+private final int tableNumber;
+
+public DineInOrder(int tableNumber) {
+    super();
+    this.tableNumber = tableNumber;
+}
+
+public int getTableNumber() {
+    return tableNumber;
+}
+
+@Override
+public void printOrderDetails() {
+    System.out.println("Dine-In Order (Table #" + tableNumber + "):");
+    super.printOrderDetails();
+}
+}
+-----------------------
+import java.util.*;
+
+class DriveThruOrder extends Order {
+String make; 
+String model; 
+
+Scanner input = new Scanner(System.in);
+//private static final double PROCESSING_FEE = 1.00;
+
+public DriveThruOrder() {
+    super();
+}
+
+@Override
+public double getTotalPrice() {
+    return super.getTotalPrice(); //+ PROCESSING_FEE;
+}
+
+
+@Override
+public void printOrderDetails() {
+	System.out.println("Please enter you car make, model, and color : "); 
+    String make = input.next(); 
+    String model =input.next(); 
+    String color = input.next(); 
+    System.out.println("Drive-Thru Order:");
+    
+    
+    
+    super.printOrderDetails();
+   // System.out.printf("Processing Fee: $%.2f%n");//, PROCESSING_FEE);
+   
+   // System.out.printf("Total with Fee: $%.2f%n", getTotalPrice());
+    System.out.println("Car details: " + make + " "  + model + " (" + color + ")"); 
+    
+}
+}
+---------------------------
+
+
+// MenuItem class to represent each item in the menu
+
+ class MenuItem {
+
+private final String name;
+private final double price;
+
+
+public MenuItem(String name, double price) {
+    this.name = name;
+    this.price = price;
+}
+
+public String getName() {
+    return name;
+}
+
+public double getPrice() {
+    return price;
+}
+
+
+@Override
+public String toString() {
+    return name + " - $" + price;
+}
+
+
+}
+--------------------------
+import java.util.*;
+
+ class Menu {
+
+private final HashMap<Integer, MenuItem> items;
+
+public Menu() {
+    items = new HashMap<>();
+    items.put(1, new MenuItem("Chicken Sandwich", 5.99));
+    items.put(2, new MenuItem("Spicy Chicken Sandwich", 5.99));
+    items.put(3, new MenuItem("Grilled Cool Wrap", 6.99));
+    items.put(4, new MenuItem("Chicken Nuggets", 4.99));
+    items.put(5, new MenuItem("Waffle Fries", 2.99));
+    items.put(6, new MenuItem("Mac and Cheese", 3.99));
+    items.put(7, new MenuItem("Sweet Tea", 1.99));
+    items.put(8, new MenuItem("Lemonade", 1.99));
+    items.put(9, new MenuItem("Milkshake", 3.99));
+    items.put(10, new MenuItem("Chocolate Chip Cookie", 2.99));
+}
+
+
+public void printInfo() {
+    System.out.println("---- Chick-fil-A Menu ----");
+    System.out.println("Welcome to ChickFilA");
+	System.out.println("See the Menu below: ");
+	System.out.println();
+	
+	System.out.println("Entrees: ");
+	System.out.println("  1: Chicken Sandwich: $5.99");
+	System.out.println("  2: Spicy Chicken Sandwich: $5.99");
+	System.out.println("  3: Grilled Cool Wrap: $6.99");
+	System.out.println("  4: Chicken Nuggets: $4.99");
+	
+	
+	System.out.println("Sides:");
+	System.out.println("  5: Waffle Fries: $2.99");
+	System.out.println("  6: Mac and Cheese: $3.99");
+	
+	
+	System.out.println("Drinks:");
+	System.out.println("  7: Sweet Tea: $1.99");
+	System.out.println("  8: Lemonade: $1.99");
+	
+	
+	System.out.println("Desserts: ");
+	System.out.println("  9:  Milkshake: $3.99");
+	System.out.println("  10: Chocolate Chip Cookie: $2.99");
+}
+
+public MenuItem getMenuItem(int id) {
+    return items.get(id);
+}
+
+
+
+
+}
+--------------------------
+import java.util.*;
+
+class Order  {
+	double tax; 
+	
+private final ArrayList<MenuItem> items;
+ double totalPrice;
+
+public Order() {
+    items = new ArrayList<>();
+    totalPrice = 0.0;
+}
+
+public void addItem(MenuItem item) {
+    items.add(item);
+    totalPrice += item.getPrice();
+}
+
+public ArrayList<MenuItem> getItems() {
+    return items;
+}
+
+public double getTotalPrice() {
+    return totalPrice;
+}
+public double getTax() { 
+	return tax; 
+}
+
+public void printOrderDetails() {
+    for (MenuItem item : items) {
+        System.out.println(item);     
+    }
+    tax = ((totalPrice * 1.08) - totalPrice);
+    double subtotal = (totalPrice - tax);
+    System.out.println("Sub-Total: " + String.format("%.2f", subtotal)); 
+    System.out.println("Tax (8%): $" + String.format("%.2f", tax));
+    System.out.printf("Total Price: $%.2f%n", totalPrice * 1.08 );
+  
+}
+}
+------------------------
+import java.util.*;
+
+class OrderProcessor {
+
+public void processOrder(Order order, Menu menu, Scanner scanner) {
+    System.out.println("Please choose items for your order.");
+    menu.printInfo();
+
+    while (true) {
+        System.out.print("Enter item number to add to order (0 to finish): ");
+        int choice = scanner.nextInt();
+        if (choice == 0) {
+            break;
+        }
+       
+        
+        MenuItem item = menu.getMenuItem(choice);
+        if (item != null) {
+            order.addItem(item);
+            System.out.println(item.getName() + " added to your order.");
+        } else {
+            System.out.println("Invalid selection, please try again.");
+        }
+    }
+    
+    Receipt receipt = new Receipt();
+    receipt.printReceipt(order);
+}
+}
+-------------------------------
+import java.util.*;
+class Receipt extends Order {
+
+boolean cardPayment;
+double cashPayment; 
+protected Scanner scnr = new Scanner(System.in);
+
+public void printReceipt(Order order) {
+	
+    
+    
+    System.out.println("------ Receipt ----");
+    order.printOrderDetails();
+    System.out.println("Are you paying with a credit card (True for Yes or False for No)?");
+
+    cardPayment = scnr.nextBoolean(); 
+    if (cardPayment == false) {
+    	 
+    
+    	System.out.println("How much cash would you like to pay with?");
+    	double cashPayment = scnr.nextDouble(); 
+    	System.out.println("Cash provided: " + cashPayment); 
+    	System.out.printf("Change to receive : $%.2f%n" ,cashPayment - order.getTotalPrice() - order.getTax());
+    	
+    }
+   
+    System.out.println("-------------------");
+   
+    System.out.println("Thank you for choosing Chick-fil-A!");
+    
+    
+}
+}
+---
