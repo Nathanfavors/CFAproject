@@ -194,7 +194,7 @@ public class ChickFilAOrderSimulation {
         Order driveThruOrder = new DriveThruOrder();
         orderProcessor.processOrder(driveThruOrder, menu, scanner);
 
-        scanner.close();
+    
     }
 }
 
