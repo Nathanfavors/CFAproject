@@ -31,28 +31,60 @@ class MenuItem {
 
 // Menu class to hold the menu items
 
-class Menu {
-   
-    private final HashMap<Integer, MenuItem> items;
+import java.util.*;
+
+public class Menu {
+    private HashMap<Integer, MenuItem> items;
 
     public Menu() {
-        items = new HashMap<>();
-        items.put(1, new MenuItem("Chicken Sandwich", 5.50));
-        items.put(2, new MenuItem("Fries", 2.00));
-        items.put(3, new MenuItem("Nuggets", 4.00));
-        items.put(4, new MenuItem("Drink", 1.50));
+    	items = new HashMap<>();
+        items.put(1, new MenuItem("Chicken Sandwich", 5.99, "Entree"));
+        items.put(2, new MenuItem("Spicy Chicken Sandwich", 5.99, "Entree"));
+        items.put(3, new MenuItem("Grilled Cool Wrap", 6.99, "Entree"));
+        items.put(4, new MenuItem("Chicken Nuggets", 4.99, "Entree"));
+        items.put(5, new MenuItem("Waffle Fries", 2.99, "Side"));
+        items.put(6, new MenuItem("Mac and Cheese", 3.99, "Side"));
+        items.put(7, new MenuItem("Sweet Tea", 1.99, "Drink"));
+        items.put(8, new MenuItem("Lemonade", 1.99, "Drink"));
+        items.put(9, new MenuItem("Milkshake", 3.99, "Dessert"));
+        items.put(10, new MenuItem("Chocolate Chip Cookie", 2.99, "Dessert"));
     }
 
-    public void displayMenu() {
-        System.out.println("---- Chick-fil-A Menu ----");
-        for (Map.Entry<Integer, MenuItem> entry : items.entrySet()) {
-            System.out.println(entry.getKey() + ". " + entry.getValue());
-        }
-    }
-
-    public MenuItem getMenuItem(int id) {
+    public MenuItem getItem(int id) {
         return items.get(id);
     }
+
+    public HashMap<Integer, MenuItem> getItems() {
+        return items;
+    }
+    
+    public void printInfo() {
+    	System.out.println("Welcome to ChickFilA");
+    	System.out.println("See the Menu below: ");
+    	System.out.println();
+    	
+    	System.out.println("Entrees: ");
+    	System.out.println("  1: Chicken Sandwich: $5.99");
+    	System.out.println("  2: Spicy Chicken Sandwich: $5.99");
+    	System.out.println("  3: Grilled Cool Wrap: $6.99");
+    	System.out.println("  4: Chicken Nuggets: $4.99");
+    	
+    	
+    	System.out.println("Sides:");
+    	System.out.println("  5: Waffle Fries: $2.99");
+    	System.out.println("  6: Mac and Cheese: $3.99");
+    	
+    	
+    	System.out.println("Drinks:");
+    	System.out.println("  7: Sweet Tea: $1.99");
+    	System.out.println("  8: Lemonade: $1.99");
+    	
+    	
+    	System.out.println("Desserts: ");
+    	System.out.println("  9:  Milkshake: $3.99");
+    	System.out.println("  10: Chocolate Chip Cookie: $2.99");
+    }
+    	
 }
 
 // Base Order class
