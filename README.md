@@ -194,8 +194,61 @@ public class ChickFilAOrderSimulation {
         Order driveThruOrder = new DriveThruOrder();
         orderProcessor.processOrder(driveThruOrder, menu, scanner);
 
-    
     }
 }
+
+-------------------------------------------------------------------------
+
+//updated receipt class using an array for payment
+
+import java.util.*;
+
+class Receipt extends Order {
+    private final String[] paymentMethods = {"Credit Card", "Cash", "Mobile Pay"};
+    private String selectedPaymentMethod; // Stores the selected payment method
+    protected Scanner pmt = new Scanner (System.in);
+
+    public void printReceipt(Order order) 
+    {
+       System.out.println();
+       System.out.println("Choose your payment method:");
+
+        // Display available payment methods
+        for (int i = 0; i < paymentMethods.length; i++) {
+            System.out.println((i + 1) + ". " + paymentMethods[i]);
+        }
+
+        int paymentChoice;
+        while (true) {
+            System.out.print("Enter the number for payment method: ");
+            paymentChoice = pmt.nextInt();
+
+            if (paymentChoice >= 1 && paymentChoice <= paymentMethods.length) {
+                selectedPaymentMethod = paymentMethods[paymentChoice - 1];
+                break; // Exit the loop once a valid payment method is selected
+            } else {
+                System.out.println("Invalid selection, please try again.");
+            }
+        }
+
+        // Print simplified receipt with selected payment method
+        System.out.println();
+        System.out.println("------ Receipt ------");
+        order.printOrderDetails();
+        System.out.println("Payment Method: " + selectedPaymentMethod);
+        System.out.println("Payment Successful");
+        System.out.println("---------------------");
+        System.out.println("Thank you for choosing Chick-fil-A!");
+    }
+}
+
+
+
+
+
+
+
+
+
 
 
