@@ -242,7 +242,67 @@ class Receipt extends Order {
     }
 }
 
+------------------------------------------------------------------------
+11/17 new Receipt class to reflect an array and hashset
 
+import java.util.*;
+
+class Receipt extends Order {
+    private final String[] paymentMethods = {"Credit Card", "Cash", "Mobile Pay"};
+    private String selectedPaymentMethod;
+    private static final HashSet<String> rewardsMembers = new HashSet<>(); // To store phone numbers of rewards members
+    private String phoneNumber; // Store the current customer's phone number
+    protected Scanner scnr = new Scanner(System.in);
+
+    public void printReceipt(Order order) {
+        // Choose payment method
+        System.out.println("Choose your payment method:");
+        for (int i = 0; i < paymentMethods.length; i++) {
+            System.out.println((i + 1) + ". " + paymentMethods[i]);
+        }
+
+        int paymentChoice;
+        while (true) {
+            System.out.print("Enter the number for payment method: ");
+            paymentChoice = scnr.nextInt();
+            scnr.nextLine(); // Clear newline left in the buffer
+
+            if (paymentChoice >= 1 && paymentChoice <= paymentMethods.length) {
+                selectedPaymentMethod = paymentMethods[paymentChoice - 1];
+                break;
+            } else {
+                System.out.println("Invalid selection, please try again.");
+            }
+        }
+
+        // Ask user if they want to provide a phone number for rewards
+        System.out.print("Would you like to provide a phone number for rewards? (yes/no): ");
+        String response = scnr.nextLine().trim().toLowerCase();
+        if (response.equals("yes")) {
+            System.out.print("Enter your phone number: ");
+            phoneNumber = scnr.nextLine();
+            rewardsMembers.add(phoneNumber); // Add phone number to rewards system
+            System.out.println("Your rewards are in!");
+        } else {
+            System.out.println("You can sign up for rewards online!");
+        }
+
+        // Print receipt
+        System.out.println();
+        System.out.println("------ Receipt ------");
+        order.printOrderDetails();
+        if (phoneNumber != null) {
+            System.out.println("Phone Number: " + phoneNumber);
+            System.out.println("Rewards Member: Yes");
+        } else {
+            System.out.println("Rewards Member: No");
+        }
+        System.out.println("Payment Method: " + selectedPaymentMethod);
+        System.out.println("Payment Successful");
+        System.out.println("---------------------");
+        System.out.println("Thank you for choosing Chick-fil-A!");
+    }
+}
 
 
 
